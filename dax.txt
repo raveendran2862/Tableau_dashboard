@@ -1,0 +1,55 @@
+https://us02web.zoom.us/j/83660374612
+
+
+
+2018 - 14.74
+
+2019 - 20.19
+
+2017 - 10.31
+
+pradeep_raja2003
+Kiapradeep@2024
+
+
+
+
+
+
+
+
+
+
+Sales % by Category = 
+DIVIDE(
+    SUM(Sales[SalesAmount]),
+    CALCULATE(SUM(Sales[SalesAmount]), ALL(Sales[Category]))
+)
+
+
+Top Category = 
+TOPN(
+    1,
+    SUMMARIZE(Sales, Sales[Category], "TotalSales", SUM(Sales[SalesAmount])),
+    [TotalSales], DESC
+)
+
+
+
+Sales Rank by Region = 
+RANKX(
+    ALL(Sales[Region]),
+    CALCULATE(SUM(Sales[SalesAmount])),
+    ,
+    DESC
+)
+
+
+Sales Category Label = 
+SWITCH(
+    TRUE(),
+    Sales[Category] = "Electronics" && Sales[SalesAmount] > 400, "High-Value Electronics",
+    Sales[Category] = "Furniture" && Sales[SalesAmount] > 1000, "High-Value Furniture",
+    Sales[Category] = "Clothing", "Apparel",
+    "Other"
+)
